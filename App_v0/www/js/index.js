@@ -31,6 +31,8 @@ var app = {
 };
 
 (function($) {
+    $(document).ajaxStop($.unblockUI);
+
     var authenticate = function() {
         var form = $("#authenticationForm");
         //disable the button so we can't resubmit while we wait
@@ -39,7 +41,7 @@ var app = {
         var password = $("#password", form).val();
 
         if(username != "" && password != "") {
-
+            $.blockUI();
             $.ajax({
                 type: 'POST',
                 url: 'http://demo.agoraevent.fr/api/Authentication/authenticate',
@@ -106,6 +108,7 @@ var app = {
             });
         },
         getEventsList: function(){
+            $.blockUI();
             $.ajax({
                 type: 'GET',
                 url: 'http://demo.agoraevent.fr/api/Events/',
@@ -136,6 +139,7 @@ var app = {
 
     $(document).on('vclick', '#eventsList li a', function(){
         var id = $(this).attr('data-id');
+        $.blockUI();
         $.ajax({
             type: 'GET',
             url: 'http://demo.agoraevent.fr/api/methods/events/' + id + '/ParticipantStatus/',
@@ -168,6 +172,22 @@ var app = {
     $(document).on('vclick', '#guestsList li a', function(){
         guestsList.id = $(this).attr('data-id');
         $.mobile.changePage( "#infoGuestPage", { transition: "slide", changeHash: false });
+    });
+
+    $(document).on('vclick', '#qrCode', function(){
+        var scanner = cordova.require("com.phonegap.plugins.barcodescanner.barcodescanner");
+
+        scanner.scan(
+            function (result) {
+                alert("We got a barcode\n" +
+                "Result: " + result.text + "\n" +
+                "Format: " + result.format + "\n" +
+                "Cancelled: " + result.cancelled);
+            },
+            function (error) {
+                alert("Scanning failed: " + error);
+            }
+        );
     });
 }
 )(jQuery);
