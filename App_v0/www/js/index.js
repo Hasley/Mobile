@@ -42,15 +42,13 @@ var app = {
 
             $.ajax({
                 type: 'POST',
-                //url: 'http://demo.agoraevent.fr/api/Authentication/authenticate',
-                url: 'http://localhost:60200/api/Authentication/authenticate',
+                url: 'http://demo.agoraevent.fr/api/Authentication/authenticate',
+                //url: 'http://localhost:60200/api/Authentication/authenticate',
                 crossDomain: true,
                 data:  {login: username, password : password},
                 dataType: 'json',
                 success: function (result) {
                     ApiToken = result;
-                    //var obj = jQuery.parseJSON(result);
-                    //ajax.parseEvents(obj);
                     $.mobile.changePage( "#eventsPage", { transition: "slide", changeHash: false });
                 },
                 error: function (request,error) {
@@ -110,12 +108,11 @@ var app = {
         getEventsList: function(){
             $.ajax({
                 type: 'GET',
-                //url: 'http://demo.agoraevent.fr/api/Authentication/authenticate',
-                url: 'http://localhost:60200/api/Events/',
+                url: 'http://demo.agoraevent.fr/api/Events/',
+                //url: 'http://localhost:60200/api/Events/',
                 crossDomain: true,
                 headers: {'AgoraEvent-Token': ApiToken},
                 success: function (result) {
-                    debugger
                     ajax.parseEvents(result);
                 },
                 error: function (request, error) {
@@ -141,7 +138,8 @@ var app = {
         var id = $(this).attr('data-id');
         $.ajax({
             type: 'GET',
-            url: 'http://localhost:60200/api/methods/events/' + id + '/ParticipantStatus/',
+            url: 'http://demo.agoraevent.fr/api/methods/events/' + id + '/ParticipantStatus/',
+            //url: 'http://localhost:60200/api/methods/events/' + id + '/ParticipantStatus/',
             crossDomain: true,
             headers: {'AgoraEvent-Token': ApiToken},
             success: function (result) {
