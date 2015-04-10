@@ -175,6 +175,7 @@ var app = {
     });
 
     $(document).on('vclick', '#qrCode', function(){
+        alert("launching barcode reader");
         var scanner = cordova.require("com.phonegap.plugins.barcodescanner.barcodescanner");
 
         scanner.scan(
