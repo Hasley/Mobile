@@ -1,21 +1,3 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 var app = {
     // Application Constructor
     initialize: function() {
@@ -47,3 +29,147 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+(function($) {
+    var authenticate = function() {
+        var form = $("#authenticationForm");
+        //disable the button so we can't resubmit while we wait
+        //$("#btnConnexion",form).attr("disabled","disabled");
+        var username = $("#username", form).val();
+        var password = $("#password", form).val();
+
+        if(username != "" && password != "") {
+
+            $.ajax({
+                type: 'POST',
+                //url: 'http://demo.agoraevent.fr/api/Authentication/authenticate',
+                url: 'http://localhost:60200/api/Authentication/authenticate',
+                crossDomain: true,
+                data:  {login: username, password : password},
+                dataType: 'json',
+                success: function (result) {
+                    ApiToken = result;
+                    //var obj = jQuery.parseJSON(result);
+                    //ajax.parseEvents(obj);
+                    $.mobile.changePage( "#eventsPage", { transition: "slide", changeHash: false });
+                },
+                error: function (request,error) {
+                    if(request.status == 401){
+                        alert("Combinaison identifiants / mot de passe invalide");
+                    }
+                }
+            });
+
+            /*
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:58001/api/Event/',
+                crossDomain: true,
+                dataType: "json",
+                success: function (result) {
+                    var obj = jQuery.parseJSON(result);
+                    ajax.parseEvents(obj);
+                    $.mobile.changePage( "#eventsPage", { transition: "slide", changeHash: false });
+                },
+                error: function (request,error) {
+                    alert('Network error has occurred please try again!');
+                }
+            });
+            */
+        }
+        else {
+            //if the email and password is empty
+            alert("Veuillez renseigner les champs d'authentification");
+        }
+    };
+
+    var guestsList = {
+        id : null,
+        list : null
+    }
+
+    var ApiToken = null;
+
+    var ajax = {
+        parseEvents:function(result){
+            $('#eventsList').empty();
+            $.each(result, function(i, row) {
+                console.log(JSON.stringify(row));
+                $('#eventsList').append('<li><a href="" data-id="' + row.ID + '"><h3>' + row.Title + '</h3><p>' + row.StartDate + '</p></a></li>');
+            });
+            $('#eventsList').listview('refresh');
+        },
+        parseGuests:function(result){
+            $('#guestsList').empty();
+            guestsList.list = result;
+            $.each(result, function(i, row) {
+                console.log(JSON.stringify(row));
+                $('#guestsList').append('<li><a href="" data-id="' + row.ID + '"><h3>' + row.LastName + '</h3><p>' + row.FirstName + '</p></a></li>');
+            });
+        },
+        getEventsList: function(){
+            $.ajax({
+                type: 'GET',
+                //url: 'http://demo.agoraevent.fr/api/Authentication/authenticate',
+                url: 'http://localhost:60200/api/Events/',
+                crossDomain: true,
+                headers: {'AgoraEvent-Token': ApiToken},
+                success: function (result) {
+                    debugger
+                    ajax.parseEvents(result);
+                },
+                error: function (request, error) {
+                    alert("Error in finding event list");
+                }
+            });
+        }
+    }
+
+    $(document).on('pagebeforeshow', '#eventsPage', function(){
+        ajax.getEventsList();
+    });
+
+    $(document).on('pagebeforeshow', '#guestsPage', function(){
+        $('#guestsList').listview('refresh');
+    });
+
+    $( document ).on( "ready", function(){
+        $('#btnConnexion').on('click', authenticate);
+    });
+
+    $(document).on('vclick', '#eventsList li a', function(){
+        var id = $(this).attr('data-id');
+        $.ajax({
+            type: 'GET',
+            url: 'http://localhost:60200/api/methods/events/' + id + '/ParticipantStatus/',
+            crossDomain: true,
+            headers: {'AgoraEvent-Token': ApiToken},
+            success: function (result) {
+                ajax.parseGuests(result);
+                $.mobile.changePage( "#guestsPage", { transition: "slide", changeHash: false });
+            },
+            error: function (request,error) {
+                alert('Network error has occurred please try again!');
+            }
+        });
+    });
+
+    $(document).on('pagebeforeshow', '#infoGuestPage', function(){
+        $('#guestData').empty();
+        $.each(guestsList.list, function(i, row) {
+            if(row.ID == guestsList.id) {
+                $('#guestData').append('<li>Nom: '+row.FirstName+'</li>');
+                $('#guestData').append('<li>Prenom : '+row.LastName+'</li>');
+                $('#guestData').append('<li>Email : '+row.Email+'</li>');
+                $('#guestData').append('<li>Status : '+row.StatusName+'</li>');
+                $('#guestData').listview('refresh');
+            }
+        });
+    });
+
+    $(document).on('vclick', '#guestsList li a', function(){
+        guestsList.id = $(this).attr('data-id');
+        $.mobile.changePage( "#infoGuestPage", { transition: "slide", changeHash: false });
+    });
+}
+)(jQuery);

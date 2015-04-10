@@ -1,0 +1,50 @@
+a[disabled] {
+    pointer-events: none;
+}
+
+.connexionField{
+    margin: 10px;
+}
+
+#btnConnexion{
+    width: 150px;
+    margin: 0 auto;
+}
+
+.headerApp{
+    height: 70px;
+}
+
+.headerApp a{
+    display: inline-block;
+    width: 70px;
+}
+
+.headerApp h1{
+    display: inline;
+}
+
+.ui-content {
+    padding: 0 !important;
+}
+
+.ui-listview {
+    margin: 0 !important;
+}
+
+.example-wrapper, .example-wrapper div.iscroll-scroller {
+    width: 100% !important;
+}
+
+.logo{
+    margin-left: 15px;
+    position: absolute;
+}
+
+
+#qrCode{
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    top: 80%;
+}
