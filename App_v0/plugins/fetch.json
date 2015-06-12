@@ -1,0 +1,15 @@
+{
+    "cordova-plugin-splashscreen": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/apache/cordova-plugin-splashscreen.git",
+            "subdir": "."
+        }
+    },
+    "io.litehelpers.cordova.sqlite": {
+        "source": {
+            "type": "registry",
+            "id": "io.litehelpers.cordova.sqlite"
+        }
+    }
+}
