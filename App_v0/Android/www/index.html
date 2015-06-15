@@ -1,0 +1,660 @@
+<html ng-app="app">
+    <head>
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet"  href="spec/lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5.css">
+        <link rel="stylesheet" type="text/css" href="spec/lib/onsenui/css/onsenui.css" />
+        <link rel="stylesheet" type="text/css" href="spec/lib/onsenui/css/onsen-css-components-sunshine-theme.css" />
+        <link rel="stylesheet" type="text/css" href="css/app.css" />
+
+        <script src="spec/lib/onsenui/js/angular/angular.js"></script>
+        <script src="spec/lib/onsenui/js/onsenui_all.min.js"></script>
+        <script src="spec/lib/jquery.js"></script>
+        <script src="spec/lib/jquery.mobile-1.4.5/jquery.mobile-1.4.5.js"></script>
+        <script src="spec/lib/jquery.blockUI.js"></script>
+        <script src="spec/lib/jquery.binarytransport.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="barcodescanner.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+
+        <script>
+            ons.ready(function() {
+            });
+        </script>
+
+        <title>Avanti-Technologies</title>
+    </head>
+
+    <body ng-controller="AppController">
+        <div data-role="page" class="" id="mainPage">
+            <div data-role="content" class="">
+                <div id="logoAgoraWrapper">
+                    <img src="img/logoAgoraNUDE.png" id="logoAgora" class="ri">
+                </div>
+                <div class="wrapper">
+                    <div class="bottomMenu">
+                        <div class="menuInputField">
+                            <input type="submit" value="Mode en ligne" id="btnWifi" data-wrapper-class="custom-btn-menu">
+                            <input type="submit" value="Mode hors ligne" id="btnNoWifi" data-wrapper-class="custom-btn-menu">
+                        </div>
+                    </div>
+
+                    <ul class="bg-bubbles">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" class="" id="loginPage">
+            <div data-role="content" class="">
+                <div class="wrapper">
+                    <div class="container">
+                        <h1>Bienvenue</h1>
+                        
+                        <form id="authenticationForm" class="form">
+                            <div data-role="fieldcontain">
+                                <div class="connexionField">
+                                    <input type="text" name="username" id="username" data-clear-btn="true" maxlength="50" value="" placeholder="Email">
+                                </div>
+                                <div class="connexionField">
+                                    <input type="password" name="password" id="password" data-clear-btn="true" maxlength="50" value="" placeholder="Mot de passe">
+                                </div>
+
+                                <div class="connexionField">
+                                    <input id="checkboxRememberMe" type="checkbox" name="rememberMe" value="yes" data-wrapper-class="custom-btn-menu">
+                                    <label for="checkboxRememberMe">Se souvenir de moi</label>
+                                </div>
+                                
+                            </div>
+
+                            <div class="connexionField">
+                                <input type="submit" value="Connexion" id="btnConnexion" data-wrapper-class="custom-btn-menu">
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <ul class="bg-bubbles">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" class="" id="eventsPage" data-add-back-btn="true" >
+            <div class="navigation-bar navigation-bar--transparent" >
+              <div class="navigation-bar__left">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='backtoLoginButton' >Retour</span>
+              </div>
+              <div class="navigation-bar__center">
+                Liste des évènements
+              </div>
+              <div class="navigation-bar__right">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='moreOptionEventsPage'>
+                  <i class="fa fa-ellipsis-v" style=""></i>
+                </span>
+              </div>
+            </div>
+
+
+            <div data-role="content">
+                <div class="listWrapper" data-iscroll>
+                    <ul data-role="listview" id="eventsList" data-theme="a" data-filter="true" data-filter-placeholder="Rechercher...">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="popover-mask" id="moreOptionOverlayDivEventsPage"></div>
+            <div id="moreOptionDivEventsPage"  class="popover popover--down" style="top: 50px; right: 10px;">
+              <div class="popover__top-arrow"></div>
+
+              <div class="popover__content">
+                <div style="text-align:center; opacity: 0.4;">
+                    <ul class="list">
+                        <li class="list__item" id="eventsPageBtnAccueil"><i class="fa fa-home" style="margin-right: 15px;"></i>Accueil</li>
+                         <li class="list__item" id="disconnect"><i class="fa fa-exclamation-circle" style="margin-right: 15px;"></i>Déconnexion</li>
+                    </ul>
+              </div>
+              </div>
+            </div>
+        </div>
+
+        <div data-role="page" class="" id="prestationsPage" data-add-back-btn="true" >
+            <div class="navigation-bar navigation-bar--transparent" >
+              <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='backBtnPrestationsPage'>Retour</span>
+              </div>
+              <div class="navigation-bar__center" id="PrestationsPageTitle">
+                Liste des prestations
+              </div>
+              <div class="navigation-bar__right">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='moreOptionPrestationPage'>
+                  <i class="fa fa-ellipsis-v" style=""></i>
+                </span>
+              </div>
+            </div>
+
+            <div data-role="content">
+                <div class="listWrapper" data-iscroll>
+                    <ul data-role="listview" id="prestationsList" data-theme="a" data-filter="true" data-filter-placeholder="Rechercher...">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="popover-mask" id="moreOptionOverlayDivPrestationPage"></div>
+            <div id="moreOptionDivPrestationPage"  class="popover popover--down" style="top: 50px; right: 10px;">
+              <div class="popover__top-arrow"></div>
+
+              <div class="popover__content">
+                <div style="text-align:center; opacity: 0.4;">
+                    <ul class="list">
+                        <li class="list__item" id="prestationsPageFooterBtnAccueil"><i class="fa fa-home" style="margin-right: 15px;"></i>Accueil</li>
+                        <li class="list__item" id="prestationsPageFooterBtnActualiser"><i class="fa fa-refresh" style="margin-right: 15px;"></i>Actualiser</li>
+                        <li class="list__item" id="prestationsPageFooterBtnImport"><i class="fa fa-download" style="margin-right: 15px;"></i>Télécharger les listes</li>
+                        <li class="list__item" id="prestationsPageFooterBtnHorsLigne"><i class="fa fa-ban" style="margin-right: 15px;"></i>Passer en mode hors ligne</li>
+                    </ul>
+              </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENANT LA LISTE DES INVITES EN VERSION TABLETTE -->
+        <div data-role="page" class="guestsPageView" id="guestsPage" data-add-back-btn="true">
+            <div class="navigation-bar navigation-bar--transparent" >
+              <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='guestsPageBackButton'>Retour</span>
+              </div>
+              <div class="navigation-bar__center" id="guestsPageTitle">
+                Liste des invités
+              </div>
+              <div class="navigation-bar__right">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='moreOptionGuestsPage'>
+                  <i class="fa fa-ellipsis-v" style=""></i>
+                </span>
+              </div>
+              <div data-theme="a" class="thirdHeader ui-bar ui-bar-a">
+                    <h2 style="float: left;" id="guestsPageNbResults"></h2>
+                    <h2 style="float: right;"><span id="guestsPageNbPresents"></span></h2>
+                </div>
+            </div>
+
+            <div data-role="content">
+                <div class="listWrapper" id="guestsListWrapper" data-iscroll>
+                    <ul data-role="listview" id="guestsList" data-theme="a" data-autodividers="true">
+
+                    </ul>
+                </div>
+
+                <div class="wrapperProfile">
+                    <div class="profile-card">
+                        <div class="profile-card">
+                        <div class="profile-image"><i class="fa fa-user fa-4x profileIcon" id="iconUserInfoGuestPage"></i></div>
+                        <div class="profile-name" id="infoGuestPageName">Nom Prénom</div>
+                        <div class="profile-id" id="infoGuestPageCategory">Catégorie</div>
+                    </div>
+
+                    <button class="button--large--cta" id="infoGuestFooterBtnCheck">Valider la présence</button>
+                    <button class="button--large--cta" id="infoGuestPageEbillet">Télécharger l'e-billet</button>
+
+                    <div id="guestData" style="text-align: left;">                        
+
+                    </div>
+
+                    <div id="guestDataPrestations">
+                        <ul data-role="listview" id="guestDataPrestationsList" data-theme="a">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" >
+                    <ul>
+                        <li><a href="#" id="guestsListFooterBtnQrcode" data-icon="custom" class="ui-nodisc-icon">Scan</a></li>
+                        <li><a href="#" id="guestsListFooterBtnSearch" data-icon="custom" class="ui-nodisc-icon footerIcon">Rechercher</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="guestsPageSearchFilter" class="optionPanel searchFilter">
+                <a href="#" id="deleteBtnSearchFilter" data-role="button" data-icon="delete"></a>
+            </div>
+
+            <div class="popover-mask" id="moreOptionOverlayDivGuestsPage"></div>
+            <div id="moreOptionDivGuestsPage"  class="popover popover--down" style="top: 50px; right: 10px;">
+                  <div class="popover__top-arrow"></div>
+
+                  <div class="popover__content">
+                    <div style="text-align:center; opacity: 0.4;">
+                        <ul class="list">
+                            <li class="list__item" id="guestsListFooterBtnAccueil"><i class="fa fa-home" style="margin-right: 15px;"></i>Accueil</li>
+                            <li class="list__item" id="guestsListFooterBtnActualiser"><i class="fa fa-refresh" style="margin-right: 15px;"></i>Actualiser</li>
+                            <li class="list__item" id="guestsListFooterBtnImport"><i class="fa fa-download" style="margin-right: 15px;"></i>Télécharger les listes</li>
+                            <li class="list__item" id="guestsListFooterBtnHorsLigne"><i class="fa fa-ban" style="margin-right: 15px;"></i>Passer en mode hors ligne</li>
+                        </ul>
+                  </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <!-- END TABLETTE -->
+
+        <!-- PAGE CONTENANT LA LISTE DES INVITES EN VERSION MOBILE -->
+        <div data-role="page" class="guestsPageView" id="guestsPage" data-add-back-btn="true">
+            <div class="navigation-bar navigation-bar--transparent" >
+              <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='guestsPageBackButton'>Retour</span>
+              </div>
+              <div class="navigation-bar__center" id="guestsPageTitle">
+                Liste des invités
+              </div>
+              <div class="navigation-bar__right">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='moreOptionGuestsPage'>
+                  <i class="fa fa-ellipsis-v" style=""></i>
+                </span>
+              </div>
+              <div data-theme="a" class="thirdHeader ui-bar ui-bar-a">
+                    <h2 style="float: left;" id="guestsPageNbResults"></h2>
+                    <h2 style="float: right;"><span id="guestsPageNbPresents"></span></h2>
+                </div>
+            </div>
+
+            <div data-role="content">
+                <div class="listWrapper" data-iscroll>
+                    <ul data-role="listview" id="guestsList" data-theme="a" data-autodividers="true">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" >
+                    <ul>
+                        <li><a href="#" id="guestsListFooterBtnQrcode" data-icon="custom" class="ui-nodisc-icon">Scan</a></li>
+                        <li><a href="#" id="guestsListFooterBtnSearch" data-icon="custom" class="ui-nodisc-icon footerIcon">Rechercher</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div id="guestsPageSearchFilter" class="optionPanel searchFilter">
+                <a href="#" id="deleteBtnSearchFilter" data-role="button" data-icon="delete"></a>
+            </div>
+
+            <div class="popover-mask" id="moreOptionOverlayDivGuestsPage"></div>
+            <div id="moreOptionDivGuestsPage"  class="popover popover--down" style="top: 50px; right: 10px;">
+                  <div class="popover__top-arrow"></div>
+
+                  <div class="popover__content">
+                    <div style="text-align:center; opacity: 0.4;">
+                        <ul class="list">
+                            <li class="list__item" id="guestsListFooterBtnAccueil"><i class="fa fa-home" style="margin-right: 15px;"></i>Accueil</li>
+                            <li class="list__item" id="guestsListFooterBtnImport"><i class="fa fa-download" style="margin-right: 15px;"></i>Télécharger les listes</li>
+                            <li class="list__item" id="guestsListFooterBtnHorsLigne"><i class="fa fa-ban" style="margin-right: 15px;"></i>Passer en mode hors ligne</li>
+                        </ul>
+                  </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div data-role="page" id="infoGuestPage" class="guestsPageView" data-add-back-btn="true" >
+            <div class="navigation-bar navigation-bar--transparent" >
+                <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='infoGuestPageBackButton'>Retour</span>
+                </div>
+                <div class="navigation-bar__center" id="guestsPageTitle">
+                Profil utilisateur
+                </div>
+                <div class="navigation-bar__right">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='infoGuestPageEbillet'>E-billet</span>
+                </div>
+            </div>
+
+            <div data-role="content">
+                <div class="profile-card">
+                    <div class="profile-image"><i class="fa fa-user fa-4x profileIcon" id="iconUserInfoGuestPage"></i></div>
+                    <div class="profile-name" id="infoGuestPageName">Nom Prénom</div>
+                    <div class="profile-id" id="infoGuestPageCategory">Catégorie</div>
+                </div>
+
+                <div id="guestData">
+
+                </div>
+
+                <div id="guestDataPrestations">
+                    <ul data-role="listview" id="guestDataPrestationsList" data-theme="a">
+
+                    </ul>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar">
+                    <ul>
+                        <li><a href="#" id="infoGuestFooterBtnCheck" data-icon="custom" class="ui-nodisc-icon footerIcon">Valider la présence</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END MOBILE -->
+
+        <div data-role="page" class="" id="prestationsPageLocal" data-add-back-btn="true" >
+            <div class="navigation-bar navigation-bar--transparent" >
+              <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='backBtnPrestationsPageLocal'>Retour</span>
+              </div>
+              <div class="navigation-bar__center" id="PrestationsPageLocalTitle">
+                Mode hors ligne : Prestations
+              </div>
+              <div class="navigation-bar__right">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='moreOptionPrestationPageLocal'>
+                  <i class="fa fa-ellipsis-v" style=""></i>
+                </span>
+              </div>
+            </div>
+
+            <div data-role="content">
+                <div class="listWrapper" data-iscroll>
+                    <ul data-role="listview" id="prestationsLocalList" data-theme="a" data-filter="true" data-filter-placeholder="Rechercher...">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="popover-mask" id="moreOptionOverlayDivPrestationPageLocal"></div>
+            <div id="moreOptionDivPrestationPageLocal"  class="popover popover--down" style="top: 50px; right: 10px;">
+                <div class="popover__top-arrow"></div>
+
+                <div class="popover__content">
+                    <div style="text-align:center; opacity: 0.4;">
+                        <ul class="list">
+                            <li class="list__item" id="prestationsPageLocalFooterBtnAccueil"><i class="fa fa-home" style="margin-right: 15px;"></i>Accueil</li>
+                            <li class="list__item" id="prestationsPageLocalFooterBtnExport"><i class="fa fa-ban" style="margin-right: 15px;"></i>Exporter les modifications</li>
+                        </ul>
+                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE CONTENANT LA LISTE DES INVITES EN VERSION TABLETTE LOCAL -->
+        <div data-role="page" class="guestsPageViewLocal" id="guestsPageLocal" data-add-back-btn="true" >
+            <div class="navigation-bar navigation-bar--transparent" >
+              <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='guestsPageLocalBackButton'>Retour</span>
+              </div>
+              <div class="navigation-bar__center" id="guestsPageLocalTitle">
+                Mode hors ligne: Invités
+              </div>
+              <div class="navigation-bar__right">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='moreOptionGuestsPageLocal'>
+                  <i class="fa fa-ellipsis-v" style=""></i>
+                </span>
+              </div>
+              <div data-theme="a" class="thirdHeader ui-bar ui-bar-a">
+                    <h2 id="guestsPageLocalNbResults"></h2>
+                </div>
+            </div>
+
+            <div data-role="content">
+                <div class="listWrapper" id="guestsListLocalWrapper" data-iscroll>
+                    <ul data-role="listview" id="guestsListLocal" data-theme="a" data-autodividers="true">
+
+                    </ul>
+                </div>
+
+                <div class="wrapperProfile">
+                    <div class="profile-card" style="margin-top: 45px;">
+                        <div class="profile-image"><i class="fa fa-user fa-4x profileIcon" id="iconUserInfoGuestPageLocal"></i></div>
+                        <div class="profile-name" id="infoGuestPageLocalName">Nom Prénom</div>
+                        <div class="profile-id" id="infoGuestPageLocalCategory">Catégorie</div>
+                    </div>
+                    
+                    <button class="button--large--cta" id="infoGuestLocalFooterBtnCheck">Valider la présence</button>
+                    
+                    <div id="guestDataLocal" style="text-align: left; color: white;">
+
+                    </div>
+
+                    <div id="guestDataPrestationsLocal">
+                        <ul data-role="listview" id="guestDataPrestationsListLocal" data-theme="a">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" >
+                    <ul>
+                        <li><a href="#" id="guestsListLocalFooterBtnQrcode" data-icon="custom" class="ui-nodisc-icon">Scan</a></li>
+                        <li><a href="#" id="guestsListLocalFooterBtnSearch" data-icon="custom" class="ui-nodisc-icon footerIcon">Rechercher</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="popover-mask" id="moreOptionOverlayDivGuestsPageLocal"></div>
+            <div id="moreOptionDivGuestsPageLocal"  class="popover popover--down" style="top: 50px; right: 10px;">
+              <div class="popover__top-arrow"></div>
+
+              <div class="popover__content">
+                <div style="text-align:center; opacity: 0.4;">
+                    <ul class="list">
+                        <li class="list__item" id="guestsListLocalFooterBtnAccueil"><i class="fa fa-home" style="margin-right: 15px;"></i>Accueil</li>
+                        <li class="list__item" id="guestsListLocalFooterBtnExport"><i class="fa fa-ban" style="margin-right: 15px;"></i>Exporter les modifications</li>
+                    </ul>
+              </div>
+              </div>
+            </div>
+
+            <div id="guestsPageLocalSearchFilter" class="optionPanel searchFilter">
+                <a href="#" id="deleteBtnLocalSearchFilter" data-role="button" data-icon="delete"></a>
+            </div>
+        </div>
+        <!-- END TABLETTE LOCAL -->
+
+        <!-- PAGE CONTENANT LA LISTE DES INVITES EN VERSION MOBILE LOCAL -->
+        <div data-role="page" class="guestsPageViewLocal" id="guestsPageLocal" data-add-back-btn="true" >
+            <div class="navigation-bar navigation-bar--transparent" >
+              <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='guestsPageLocalBackButton'>Retour</span>
+              </div>
+              <div class="navigation-bar__center" id="guestsPageLocalTitle">
+                Mode hors ligne: Invités
+              </div>
+              <div class="navigation-bar__right">
+                <span class="toolbar-button--quiet navigation-bar__line-height" id='moreOptionGuestsPageLocal'>
+                  <i class="fa fa-ellipsis-v" style=""></i>
+                </span>
+              </div>
+              <div data-theme="a" class="thirdHeader ui-bar ui-bar-a">
+                    <h2 id="guestsPageLocalNbResults"></h2>
+                </div>
+            </div>
+
+            <div data-role="content">
+                <div class="listWrapper" data-iscroll>
+                    <ul data-role="listview" id="guestsListLocal" data-theme="a" data-autodividers="true">
+
+                    </ul>
+                </div>
+            </div>
+
+            <div data-role="footer" data-position="fixed" data-tap-toggle="false">
+                <div data-role="navbar" >
+                    <ul>
+                        <li><a href="#" id="guestsListLocalFooterBtnQrcode" data-icon="custom" class="ui-nodisc-icon">Scan</a></li>
+                        <li><a href="#" id="guestsListLocalFooterBtnSearch" data-icon="custom" class="ui-nodisc-icon footerIcon">Rechercher</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="popover-mask" id="moreOptionOverlayDivGuestsPageLocal"></div>
+            <div id="moreOptionDivGuestsPageLocal"  class="popover popover--down" style="top: 50px; right: 10px;">
+              <div class="popover__top-arrow"></div>
+
+              <div class="popover__content">
+                <div style="text-align:center; opacity: 0.4;">
+                    <ul class="list">
+                        <li class="list__item" id="guestsListLocalFooterBtnAccueil"><i class="fa fa-home" style="margin-right: 15px;"></i>Accueil</li>
+                        <li class="list__item" id="guestsListLocalFooterBtnExport"><i class="fa fa-ban" style="margin-right: 15px;"></i>Exporter les modifications</li>
+                    </ul>
+              </div>
+              </div>
+            </div>
+
+            <div id="guestsPageLocalSearchFilter" class="optionPanel searchFilter">
+                <a href="#" id="deleteBtnLocalSearchFilter" data-role="button" data-icon="delete"></a>
+            </div>
+        </div>
+
+        <div data-role="page" class="guestsPageViewLocal" id="infoGuestPageLocal" data-add-back-btn="true" >
+            <div class="navigation-bar navigation-bar--transparent" >
+                <div class="navigation-bar__left">
+                    <span class="toolbar-button--quiet navigation-bar__line-height" id='infoGuestPageLocalBackButton'>Retour</span>
+                </div>
+                <div class="navigation-bar__center" id="guestsPageTitle">
+                Profil utilisateur
+                </div>
+                <div class="navigation-bar__right">
+                </div>
+            </div>
+
+            <div data-role="content">
+                <div class="profile-card">
+                    <div class="profile-image"><i class="fa fa-user fa-4x profileIcon" id="iconUserInfoGuestPageLocal"></i></div>
+                    <div class="profile-name" id="infoGuestPageLocalName">Dave Graham</div>
+                    <div class="profile-id" id="infoGuestPageLocalCategory">Société</div>
+                </div>
+
+                <div id="guestDataLocal">
+
+                </div>
+
+                <div id="guestDataPrestationsLocal">
+                    <ul data-role="listview" id="guestDataPrestationsListLocal" data-theme="a">
+
+                    </ul>
+                </div>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <div data-role="navbar" >
+                    <ul>
+                        <li><a href="#" id="infoGuestLocalFooterBtnCheck" data-icon="custom" class="ui-nodisc-icon footerIcon">Valider la présence</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- END MOBILE LOCAL -->
+
+
+        <ons-template id="loginExport.html">
+          <ons-dialog var="dialog" cancelable>
+            <div id="dialogExport">
+              <ons-toolbar inline>
+                <div class="center">
+                  Authentification
+                </div>
+              </ons-toolbar>
+                    <form id="authenticationFormExport">
+                          <p>
+                            <input placeholder="Identifiant" id="usernameExport" class="text-input">
+                          </p>
+                          <p>
+                            <input type="password" placeholder="Mot de passe" id="passwordExport" class="text-input">
+                          </p>
+                          <p>
+                            <ons-button modifier="large" id="btnConnexionExport">Connexion</ons-button>
+                          </p>
+                    </form>
+            </div>
+          </ons-dialog> 
+        </ons-template>
+
+        <ons-template id="search.html">
+          <ons-dialog var="dialog" cancelable>
+            <div id="dialogExport">
+              <ons-toolbar inline>
+                <div class="center">
+                  Recherche
+                </div>
+              </ons-toolbar>
+                    <form id="searchForm">
+                          <p>
+                            <input placeholder="Rechercher..." id="searchField" class="text-input">
+                          </p>
+                        
+                          <p>
+                            <ons-button modifier="large" id="btnSearch">Rechercher</ons-button>
+                          </p>
+                    </form>
+            </div>
+          </ons-dialog> 
+        </ons-template>
+
+        <div id="overlay">
+        </div>
+
+        <div data-role="page" id="scanPage">
+            <a href="#" class="scanPageLinkLeft" data-role="none" id="scanPageLinkBack"><i class="fa fa-arrow-circle-left fa-4x"></i></a>
+            <div data-role="content" id="scanPageContent">
+                <div class="resultWrapper">
+                    <div class="scanResultCard">
+                        <p id="scanResultText">ok</p>
+                        <p class="infoTextScanPage">Pour relancer un scan, cliquez sur le bouton central ci-dessus</p>
+                    </div>
+                </div>
+            </div>
+
+            <div data-role="footer" data-position="fixed" class="scanPageFooter">
+                <a href="#" class="scanPageLink" data-role="none" id="scanPageLinkGuest"><i id="scanPageIcon" class="fa fa-info-circle fa-3x"></i></a>
+                <p id="scanPageTitle1">Nom</p>
+                <p id="scanPageTitle2">Prénom</p>
+                <p id="scanPageMessage">Message</p>
+            </div>
+        </div>
+    </body>
+</html>
